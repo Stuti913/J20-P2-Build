@@ -104,3 +104,101 @@ const updateLocalStorage = () => {
 };
 
 // Load Initial Data
+
+// where we convert str > json (i.e., for rendering the cards on the screen)
+// const loadInitialData = () => {
+//   const localStorageCopy = JSON.parse(localStorage.task);
+
+//   if (localStorageCopy) state.taskList = localStorageCopy.tasks;
+
+//   state.taskList.map((cardDate) => {
+//     // taskContents.innerAdjacentHTML("beforeend", htmlTaskContent(cardDate));
+//     taskContents.insertAdjacentHTML("beforeend", htmlTaskContent(cardDate));
+//   });
+// };
+
+const loadInitialData = () => {
+  const localStorageCopy = JSON.parse(localStorage.task);
+
+  if (localStorageCopy) state.taskList = localStorageCopy.tasks;
+
+  state.taskList.map((cardDate) => {
+    taskContents.insertAdjacentHTML("beforeend", htmlTaskContent(cardDate));
+  });
+};
+
+// Spread Operator
+/**
+ const obj = {
+    name: "rohan",
+    age: 2
+}
+
+
+console.log(obj);
+ {name: 'rohan', age: 2}
+
+console.log({obj});
+ {obj: {…}}obj: {name: 'rohan', age: 2}[[Prototype]]: Object
+
+console.log({...obj});
+ {name: 'rohan', age: 2}
+
+//  appending or adding a new key into obj:
+console.log({...obj, designation: "mentor"});
+{name: 'rohan', age: 2, designation: 'mentor'}
+ */
+
+/**
+ * 
+//  updating key value using spread operator
+const obj={
+    name: "rohan"
+}
+
+console.log(obj)
+ {name: 'rohan'}
+
+
+console.log({...obj, age : 2});
+ {name: 'rohan', age: 2}
+
+console.log({...obj, age :4});
+{name: 'rohan', age: 4}
+ */
+
+/* 
+var date = new Date();
+console.log(Date.now());
+
+1677511569666
+*/
+
+// when we update or when we edit ..we need to save
+const handleSubmit = (event) => {
+  // console.log("event triggerd");
+  const id = `${Date.now()}`;
+  const input = {
+    url: document.getElementById("imageUrl").value,
+    title: document.getElementById("taskTitle").value,
+    type: document.getElementById("tags").value,
+    description: document.getElementById("taskDescription").value,
+  };
+  // if (input.title === "" || input.tags === "" || input.taskDescription === "") {
+  //   return alert("Please fill all the necessary fiels :-)");
+  // }
+
+  // taskContents.innerAdjacentHTML(
+  taskContents.insertAdjacentHTML(
+    "beforeend",
+    htmlTaskContent({ ...input, id })
+  );
+  state.taskList.push({ ...input, id });
+
+  updateLocalStorage();
+};
+
+//open task
+// edit task
+// save edit
+// search
